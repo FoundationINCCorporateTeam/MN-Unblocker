@@ -1,1 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Unblocker</title>
+</head>
+<body>
+    <h1>Web Unblocker</h1>
+    <input type="text" id="urlInput" placeholder="Enter URL to unblock">
+    <button onclick="unblock()">Unblock</button>
+    <div id="content"></div>
+
+    <script>
+        async function unblock() {
+            const url = document.getElementById('urlInput').value;
+            try {
+                const response = await fetch(`/proxy?url=${url}`);
+                const content = await response.text();
+                document.getElementById('content').innerHTML = content;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('content').innerHTML = 'Error fetching content';
+            }
+        }
+    </script>
+</body>
+</html>
 
