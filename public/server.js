@@ -1,19 +1,24 @@
-async function unblockWebsite() {
-    const urlInput = document.getElementById("urlInput").value.trim();
-    const resultDiv = document.getElementById("result");
+// Node.js server (server.js)
+const express = require('express');
+const cors = require('cors');
+const fetch = require('node-fetch');
+const app = express();
 
-    if (!urlInput) {
-        resultDiv.innerText = "Please enter a website URL";
-        return;
-    }
+app.use(cors());
 
-    try {
-        // Fetch data from your serverless function with the website URL as a query parameter
-        const response = await fetch(`/api/proxy?url=${encodeURIComponent(urlInput)}`);
-        const html = await response.text();
-        resultDiv.innerHTML = html;
-    } catch (error) {
-        console.error("Error:", error);
-        resultDiv.innerText = "Failed to unblock the website. Please try again later.";
-    }
-}
+app.get('/unblock', async (req, res) => {
+  const url = req.query.url;
+  if (!url) {
+    return res.status(400).send('No URL provided');
+  }
+  try {
+    const response = await fetch(url);
+    const data = await response.text();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send('Error fetching the URL');
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
