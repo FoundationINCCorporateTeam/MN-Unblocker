@@ -1,18 +1,29 @@
+<!-- HTML (index.html) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Unblocker</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<title>Website Unblocker</title>
+<style>
+  /* Add your CSS styling here */
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Website Unblocker</h1>
-        <input type="text" id="urlInput" placeholder="Enter website URL">
-        <button onclick="unblockWebsite()">Unblock</button>
-        <div id="result"></div>
-    </div>
-    <script src="script.js"></script>
+  <input type="text" id="urlInput" placeholder="Enter URL here">
+  <button onclick="unblock()">Unblock</button>
+  <div id="content"></div>
+
+  <script>
+    // Add your JavaScript here
+    function unblock() {
+      const url = document.getElementById('urlInput').value;
+      fetch(`http://localhost:3000/unblock?url=${encodeURIComponent(url)}`)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('content').innerHTML = data;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  </script>
 </body>
 </html>
