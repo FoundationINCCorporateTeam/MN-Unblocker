@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Unblocker</title>
+    <title>Advanced Web Unblocker</title>
 </head>
 <body>
-    <h1>Web Unblocker</h1>
+    <h1>Advanced Web Unblocker</h1>
     <input type="text" id="urlInput" placeholder="Enter URL to unblock">
     <button onclick="unblock()">Unblock</button>
     <div id="content"></div>
@@ -15,7 +15,7 @@
         async function unblock() {
             const url = document.getElementById('urlInput').value;
             try {
-                const response = await fetch(`/proxy?url=${url}`);
+                const response = await fetch(`/proxy?url=${encodeURIComponent(url)}`);
                 const content = await response.text();
                 document.getElementById('content').innerHTML = content;
             } catch (error) {
@@ -26,4 +26,3 @@
     </script>
 </body>
 </html>
-
